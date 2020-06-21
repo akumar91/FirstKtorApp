@@ -3,7 +3,9 @@ package com.example.ktor.service
 import com.example.ktor.model.FlightsModel
 import com.example.ktor.model.ResponseModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
+import java.util.TimeZone
 import kotlin.collections.HashMap
 
 val gateAssignmentService by lazy {
