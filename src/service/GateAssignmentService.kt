@@ -18,7 +18,6 @@ class GateAssignmentService {
         println("Hello")
     }
 
-    // need to change this function to use coroutines
     suspend fun allocateGateForFlights(flightsModel: FlightsModel): ResponseModel {
         val flightModels = flightsModel.flights
         val numberOfGates: Int = flightsModel.numberOfGates
@@ -47,11 +46,13 @@ class GateAssignmentService {
             val sortedArrivalWithFlight = arrivalWithFlight.toList().sortedBy { (_, value) -> value}.toMap()
             val sortedDepartureWithFlight = departureWithFlight.toList().sortedBy { (_, value) -> value}.toMap()
 
+            // add coroutine here to add flight with arrival time in ascending order to a queue
             for ((key, value) in sortedArrivalWithFlight) {
                 println("Arrival fligt Number is: $key")
                 println("Time of arrival is: $value")
                 queueofFlightsWithEarlyArrival.add(key)
             }
+            // add coroutine here to add flight with departure time in ascending order to a queue
             for ((key, value) in sortedDepartureWithFlight) {
                 println("Departure fligt Number is: $key")
                 println("Time of departure is: $value")
@@ -80,7 +81,7 @@ class GateAssignmentService {
             responseModel.gateAllocation = gateAllocation
         }
 
-        //calculate average
+        //add coroutine here to get average time
         var averageWaitTime: Long = 0
         var numberOfFlights = 0
         for ((key, value) in arrivalWithFlight) {
@@ -88,9 +89,9 @@ class GateAssignmentService {
             averageWaitTime += buffer
             numberOfFlights++
         }
-
         averageWaitTime /= numberOfFlights
         averageWaitTime /= 1000
+
         responseModel.averageUseOfGateInSeconds = averageWaitTime
 
         return responseModel
